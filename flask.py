@@ -7,7 +7,6 @@ DT_model = pickle.load(open('DT_model.pkl', 'rb'))
 RF_model = pickle.load(open('RF_model.pkl', 'rb'))
 Ada_model = pickle.load(open('Ada_model.pkl', 'rb'))
 xgb_model = pickle.load(open('xgb_model1.pkl', 'rb'))
-#other_model = pickle.load(open('model.pkl', 'rb'))
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -30,17 +29,21 @@ def predict():
     Feature7 = float(request.form['checkin_count'])
     Feature8 = float(request.form['stars'])
 
-    if model_option == 'SVC Model':
-        placeholder_features = [0] * (59 - 10)  # Adjust based on the actual number of features
-        features = np.array([[Feature1, Feature2, Feature3, Feature4, Feature5,
-                              Feature6, Feature7, Feature8] + placeholder_features])
-        model = svc_model
+    # Prepare features array
+    features = np.array([[Feature1, Feature2, Feature3, Feature4, Feature5, Feature6, Feature7, Feature8]])
+
+    # Select the model based on user input
+    if model_option == 'Decision Tree':
+        model = DT_model
+    elif model_option == 'Random Forest':
+        model = RF_model
+    elif model_option == 'AdaBoost':
+        model = Ada_model
+    elif model_option == 'XGBoost':
+        model = xgb_model
     else:
-        placeholder_features = [0] * (36 - 10)  # Adjust based on the actual number of features
-        features = np.array([[Feature1, Feature2, Feature3, Feature4, Feature5,
-                              Feature6, Feature7, Feature8] + placeholder_features])
-        model = other_model
-    
+        return "Invalid model option selected."
+
     # Prediction
     prediction = model.predict(features)
     if prediction[0] == 1:
