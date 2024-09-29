@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 # Load the pre-trained model
-model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('DT_model.pkl', 'rb'))
 
 # Initialize the Flask application
 app = Flask(__name__)
