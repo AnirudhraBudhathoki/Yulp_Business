@@ -10,6 +10,7 @@ The data is derived from the Yelp academic dataset, particularly focusing on:
 business.json: Information about businesses, including attributes like name, location, categories, etc.
 checkin.json: Data about check-ins made by customers at the businesses.
 **Libraries Used**
+eda
 Data Manipulation: pandas, numpy
 Visualization: matplotlib, seaborn
 Machine Learning: scikit-learn, xgboost
